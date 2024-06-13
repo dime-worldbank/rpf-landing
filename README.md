@@ -15,6 +15,9 @@ Export the obtained information to the following environment variables:
 export ACCESS_TOKEN="[access token]"
 export SERVER_HOSTNAME="[server hostname, e.g. adb-12345678.12.azuredatabricks.net"
 export HTTP_PATH="[http path, e.g. /sql/1.0/warehouses/abcdxxx123]"
+
+// for M2 Max, the following additional variable needed.
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 ```
 
 
