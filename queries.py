@@ -46,6 +46,7 @@ def get_health_data(gdp, country):
     df = pd.merge(merged, country, on=['country_code'], how='inner')
     df = df[df.income_level != 'INX']
     df['universal_health_coverage_index'] = df['universal_health_coverage_index']/100
+    df['gdp_per_capita_2017_ppp'] = df['gdp_per_capita_2017_ppp'].astype(int)
     return df
 
 
@@ -56,10 +57,15 @@ def get_edu_data(gdp, country):
     df = pd.merge(merged, country, on=['country_code'], how='inner')
     df = df[df.income_level != 'INX']
 
+    # drop unncessary precision
+    df['learning_poverty_rate'] = df['learning_poverty_rate'].round(2)
+    df['gdp_per_capita_2017_ppp'] = df['gdp_per_capita_2017_ppp'].astype(int)
+
     # some years have very few countries' data available, drop them
     country_counts = df.groupby('year')['country_code'].nunique()
     comparable_years = country_counts[country_counts >= 45].index
     df_filtered = df[df['year'].isin(comparable_years)]
+
 
     return df_filtered
 
