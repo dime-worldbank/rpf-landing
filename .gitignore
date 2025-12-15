@@ -1,1 +1,3 @@
 minidash/
+.env
+cache

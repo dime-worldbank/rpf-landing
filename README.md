@@ -6,15 +6,14 @@ This is a dash app that contains a landing page and an overview dashboard used a
 
 First `git clone` this repo.
 
-Then generate and obtain your access token from databricks following this instruction: https://docs.databricks.com/en/dev-tools/auth/pat.html
 Get connection details for the SQL Warehouse compute resource which is used for providing the database connection: https://docs.databricks.com/en/integrations/compute-details.html
+Contact the maintainers of this repo for databricks client ID and secret.
 
-Export the obtained information to the following environment variables:
+Create `.env` from `.env.example` and the obtained information:
 
 ```bash
-export ACCESS_TOKEN="[access token]"
-export SERVER_HOSTNAME="[server hostname, e.g. adb-12345678.12.azuredatabricks.net"
-export HTTP_PATH="[http path, e.g. /sql/1.0/warehouses/abcdxxx123]"
+cp .env.example .env
+# edit .env with the obtained information
 ```
 
 
@@ -22,7 +21,7 @@ Then to setup and verify the app works locally:
 
 ```bash
 pip install -r requirements.txt
-python app.py
+dotenv run - python app.py
 open http://127.0.0.1:8050/
 ```
 You should see the data app.
@@ -44,8 +43,14 @@ rsconnect content search --server [server URL] --api-key [your API key] | jq -c 
 As of writing both the internal and external server supports 3.8.14 so that's the version we are going to use for building & deploying the dash app. If you are using `pyenv` this repo's python version has configured to use 3.8.14. If the target server uses a different version, feel free to switch using `pyenv local 3.x.x`.
 
 
+Add your RStudio Connect API key (one-time action):
+
+```bash
+rsconnect add --server https://w0lxdshyprd1c01.worldbank.org --api-key [your API key] --name prod
+```
+
 To deploy:
 
 ```bash
-rsconnect deploy dash --server [server URL] --api-key [your API key] ./
+rsconnect deploy dash --name prod ./
 ```
